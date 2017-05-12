@@ -6,11 +6,15 @@ import re
 
 
 current_path = os.path.dirname(os.path.abspath(__file__))
+
 if _platform == "win32":
   os.environ["PATH"] = "%s/lib" % current_path + os.pathsep + os.environ["PATH"]
   libcc = cdll.LoadLibrary("%s/lib/libcc.dll" % current_path)
 else:
+  x = os.getcwd()
+  os.chdir(current_path + "/lib/")
   libcc = cdll.LoadLibrary("%s/lib/libcc.so" % current_path)
+  os.chdir(x)
 
 class _cc_symbol(Structure):
   pass
